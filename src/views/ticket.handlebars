@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="/css/styles.css">
+
+<nav class="navbar bg-body-tertiary fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/products"><img class="e-comerce-logo" src="../img/20191103_095948_24e69159-bfc2-49d6-a8a8-fa0b133663be.jpg" alt=""></a>
+        <section class="container-cart">
+            <a href="/carts/{{cartId}}"><img src="../img/carrito-de-compras.png" alt="carritoDeCompras" class="cartImage"></a>
+        </section>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Kame-House</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/profile">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/sessions/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="flex flex-row justify-center items-center gap-4">
+    <section class="text-black max-w-5xl py-8">
+        <h1 class="text-4xl text-center">Ticket Details</h1>
+
+        <div class="p-4 bg-gray-800 rounded-lg shadow-lg mx-4 mt-8">
+            <div class="text-center">
+                <h2 class="text-2xl font-semibold">User Email:</h2>
+                <p class="text-lg">{{getPrototypeProperty ticket "purchaser"}}</p>
+            </div>
+
+            <div class="mt-4">
+                <h2 class="text-2xl font-semibold">Ticket Contents:
+                    {{getPrototypeProperty ticket "code"}}</h2>
+                {{#each cart.products}}
+					<div>
+						<div>
+							<h3>{{title}}</h3>
+							{{#each this.thumbnails}}
+								<img src="{{this}}" alt="{{this.title}}" class="w-24 h-24 object-cover mt-2 thumbnail-image">
+							{{/each}}
+							<p class="text-gray-400">Description: {{description}}</p>
+							<p class="text-gray-400">Price: ${{price}}</p>
+							<p class="text-gray-400">Quantity: {{quantity}}</p>
+						</div>
+					</div>
+				{{/each}}
+
+            </div>
+
+            <section class="mt-4">
+                <h2 class="text-2xl font-semibold">Total: ${{getPrototypeProperty ticket "amount"}}</h2>
+                <button
+                    class="bg-blue-500 text-black px-4 py-2 rounded mt-4 email-button"
+                    data-ticket="{{getPrototypeProperty ticket "_id"}}"
+                >Send Ticket as Email</button>
+            </section>
+        </div>
+    </section>
+</main>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script  src="/js/sendTicket.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+

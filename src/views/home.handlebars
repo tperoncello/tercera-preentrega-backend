@@ -1,0 +1,109 @@
+<link rel="stylesheet" href="/css/styles.css">
+
+<nav class="navbar bg-body-tertiary fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/products"><img class="e-comerce-logo" src="../img/20191103_095948_24e69159-bfc2-49d6-a8a8-fa0b133663be.jpg" alt=""></a>
+        <section class="container-cart">
+            <a href="/carts/{{getPrototypeProperty user "cart"}}"><img src="../img/carrito-de-compras.png" alt="carritoDeCompras" class="cartImage"></a>
+        </section>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Kame-House</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/profile">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/sessions/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div>
+
+    <h1 class="h1-bienvenido">Bienvenido, {{getPrototypeProperty user "firstName"}} {{getPrototypeProperty user "lastName"}}</h1>
+
+    
+
+    <h2>Products</h2>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {{#if paginateInfo.hasPrevPage}}
+                <li class="page-item">
+                    <a class="page-link" href="{{paginateInfo.prevLink}}">Previous</a>
+                </li>
+            {{/if}}
+            {{#each (range 1 paginateInfo.totalPages)}}
+                <li class="page-item">
+                    <a class="page-link" href="{{this.link}}">{{this.page}}</a>
+                </li>
+            {{/each}}
+            <li class="page-item">
+                <a class="page-link" href="{{paginateInfo.nextLink}}">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+
+</div>
+
+<div class="card">
+    {{#each products}}
+        <div class="card-item">
+            <img src="{{this.thumbnails.[0]}}" alt="{{this.title}}" class="card-image">
+        <div class="card-content">
+        <h2>{{this.title}}</h2>
+        <p class="description">{{this.description}}</p>
+        <p class="price">$ {{this.price}}</p>
+        <p class="category">{{this.category}}</p>
+        <button type="button" class="btn btn-success" onclick="addProductToCart('{{this._id}}')">Añadir</button>
+
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<script>
+    addProductToCart = (pid) => {
+        console.log(pid);
+        const cid = '{{getPrototypeProperty user "cart"}}';
+        console.log(cid);
+
+        fetch(`/api/cart/${cid}/product/${pid}`, {
+            method: 'post'
+        })
+        .then(result => {
+            console.log("Respuesta del servidor:", result);
+            // Verificar si la respuesta es exitosa (código 200)
+            if (!result.ok) {
+                throw new Error(`Error en la solicitud: ${result.status} - ${result.statusText}`);
+            }
+            // Devolver el resultado en formato JSON
+            return result.json();
+        })
+        .then(result => {
+            console.log("result: ", result);
+            // Verificar si 'status' es 'success' y 'cart' está presente
+            if (result.status === 'success' && result.cart) {
+                alert(`Ok. Todo salió bien! :)\nEl producto se agregó al carrito con id=${result.cart._id}!`);
+            } else {
+                throw new Error('La respuesta del servidor no tiene un formato esperado');
+            }
+        })
+        .catch(err => {
+            console.log(`Ocurrió un error :(\n${err}`);
+        });
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+

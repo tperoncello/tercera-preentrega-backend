@@ -1,0 +1,44 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <td>Titulo</td>
+            <td>Descripción</td>
+            <td>Precio</td>
+            <td>Codigo</td>
+            <td>Categoría</td>
+            <td>Stock</td>
+            <td>Cantidad</td>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each cart}}
+            <tr>
+                <td>{{ title }}</td>
+                <td>{{ description }}</td>
+                <td>{{ price }}</td>
+                <td>{{ code }}</td>
+                <td>{{ category }}</td>
+                <td>{{ stock }}</td>
+                <td>{{ quantity }}</td>
+            </tr>
+        {{/each}}
+        <tr>
+            <td>Total</td>
+            <td>{{totalAmount}}</td>
+        </tr>
+    </tbody>
+
+</table>
+<button id="checkout">Finalizar Compra</button>
+
+<script>
+    const button = document.getElementById('checkout')
+    button.addEventListener('click', async() => {
+        const res = await fetch('/pay/create-checkout-session', {
+            method: 'POST'
+        })
+        const data = await res.json()
+        // console.log(data)
+        window.location.href = data.url
+    })
+</script>

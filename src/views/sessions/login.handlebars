@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="/css/styles.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<div class="container-login">
+    <div class="wrapper">
+    <form action="/api/sessions/login" method="post">
+        <h1>Inciar Session</h1>
+        <div class="input-box">
+            <input type="text" placeholder="name@example.com" name="email" >
+            <i class='bx bxs-user'></i>
+        </div>
+        <div class="input-box">
+            <input type="password" placeholder="Password" name="password" >
+            <i class='bx bxs-lock-alt' ></i>
+        </div>
+        <div class="forgot">
+            <a href="/forget-password">Olvidé mi contraseña</a>
+        </div>
+        <input class="btn" type="submit" value="Iniciar Sesion">
+        <button class="btn" type="button" ><a href="/session/github">GitHub</a></button>
+        <div class="registrer-link">
+            <p>Don't have an account? <a href="/register">Register</a></p>
+        </div>
+    </form>
+</div>
+</div>

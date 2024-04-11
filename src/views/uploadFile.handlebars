@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="/css/styles.css">
+
+<nav class="navbar bg-body-tertiary fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/products"><img class="e-comerce-logo" src="../img/20191103_095948_24e69159-bfc2-49d6-a8a8-fa0b133663be.jpg" alt=""></a>
+        <section class="container-cart">
+            <a href="/carts/{{cart}}"><img src="../img/carrito-de-compras.png" alt="carritoDeCompras" class="cartImage"></a>
+        </section>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Kame-House</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/profile">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/sessions/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<h1>Subir archivos</h1>
+
+<section class="uploadFileContainer">
+    <form class="form-register" action="/api/users/{{userId}}/documents" method="post" enctype="multipart/form-data">
+        <label  class="fileContainer" for="file">Selecciona un archivo:</label>
+        <input class="inputFile" type="file" name="file" id="file" />
+
+        <label for="fileType">Selecciona el tipo de archivo:</label>
+        <select class="select" name="fileType" id="fileType">
+            <option class="selectOption" value="document">Documento</option>
+            <option class="selectOption" value="profileImage">Imagen de Perfil</option>
+            <option class="selectOption" value="productImage">Imagen de Producto</option>
+        </select>
+
+        <input class="boton-register" type="submit" value="Subir Archivo" />
+    </form>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="/css/styles.css">
+<h1>Real Time Products</h1>
+
+<section class="form-register">
+    <h4>Añadir Producto</h4>
+    <input class="control-register" type="text" name="title" id="title" placeholder="Ingrese el Nombre">
+    <input class="control-register" type="text" name="description" id="description" placeholder="Ingrese la Descripción">
+    <input class="control-register" type="number" name="price" id="price" placeholder="Ingrese el Precio">
+    <input class="control-register" type="text" name="code" id="code" placeholder="Ingrese el Codigo">
+    <input class="control-register" type="text" name="stock" id="stock" placeholder="Ingrese el Stock">
+    <input class="control-register" type="text" name="category" id="category" placeholder="Ingrese la Category">
+    <input id="createBtn" class="boton-register" type="submit" value="Create Product">
+</section>
+
+<hr />
+
+<div id="realTimeProducts" class="mostrarProductos card">
+    {{#each products}}
+        <div class="card-item">
+            <img src="{{this.thumbnails.[0]}}" alt="{{this.title}}" class="card-image">
+            <div class="card-content">
+                <h2>{{this.title}}</h2>
+                <p class="description">{{this.description}}</p>
+                <p class="price">$ {{this.price}}</p>
+                <p class="category">{{this.category}}</p>
+                <button class="btn btn-danger" onclick="deleteProduct('{{this._id}}')">Eliminar</button>
+            </div>
+        </div>
+    {{/each}}
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
